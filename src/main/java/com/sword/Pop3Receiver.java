@@ -5,6 +5,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.commons.net.PrintCommandListener;
@@ -15,7 +17,7 @@ import com.buck.common.codec.QuotedPrintable;
 
 
 public class Pop3Receiver {
-
+    private static List<String> sendList;
     public static void printMessageInfo(final BufferedReader reader, final int id) throws IOException {
         String mail = "";
         String from = "";
@@ -45,8 +47,8 @@ public class Pop3Receiver {
 //        System.out.println(Integer.toString(id) + " From: " + from + "  Subject: " + subject);
 
         if (from.contains("@amazon.com")) {
-            System.out.print(mail);
-//        html="=E6=AC=A2=E8=BF=8E=E4=BD=BF=E7=94=A8=E7=BD=91";
+//            System.out.print(mail);
+//        html="=E6=AC=A2=E8=BF=8E=E4=BD=BF=E7=94=A8=E7=BD=91"; //test code
             html = new String(new QuotedPrintable().newDecoder().decode(html.getBytes("utf-8")), Charset.forName("utf-8"));
             if (html.contains("验证请求") && visitUrl) {
                 html = html.substring(0, html.indexOf("验证请求"));
@@ -58,27 +60,43 @@ public class Pop3Receiver {
 
                 String confirmUrl = html;
 
-                URL url = new URL(confirmUrl);
+                if(needSend(confirmUrl)) {
+                    URL url = new URL(confirmUrl);
 
-                URLConnection URLconnection = url.openConnection();
-                HttpURLConnection httpConnection = (HttpURLConnection) URLconnection;
-                int responseCode = httpConnection.getResponseCode();
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    System.err.println("成功");
-                    InputStream in = httpConnection.getInputStream();
-                    InputStreamReader isr = new InputStreamReader(in);
-                    BufferedReader bufr = new BufferedReader(isr);
-                    String str;
-                    while ((str = bufr.readLine()) != null) {
-                        System.out.println(str);
+                    URLConnection URLconnection = url.openConnection();
+                    HttpURLConnection httpConnection = (HttpURLConnection) URLconnection;
+                    int responseCode = httpConnection.getResponseCode();
+                    if (responseCode == HttpURLConnection.HTTP_OK) {
+                        System.err.println("成功");
+
+//                        InputStream in = httpConnection.getInputStream();
+//                        InputStreamReader isr = new InputStreamReader(in);
+//                        BufferedReader bufr = new BufferedReader(isr);
+//                        String str;
+//                        while ((str = bufr.readLine()) != null) {
+//                            System.out.println(str);
+//                        }
+//                        bufr.close();
+
+                    } else {
+                        System.err.println("失败");
                     }
-                    bufr.close();
-                } else {
-                    System.err.println("失败");
                 }
             }
         }
         mail = "";
+    }
+
+    private static boolean needSend(String url){    //判断是否曾经发送过，返回结果并添加到已发送列表
+        boolean ret=true;
+        for(String s : sendList){
+            if(s.compareTo(url)==0)ret=false;
+        }
+        if(ret){
+            sendList.add(url);
+            //Todo:save2File
+        }
+        return ret;
     }
 
     public static void main(final String[] args) {
@@ -89,6 +107,9 @@ public class Pop3Receiver {
                     "Example: Pop3Receiver pop.163.com:995 username password TLS");
             System.exit(1);
         }
+
+        //todo:load sendlist
+        sendList=new ArrayList<String>();
 
         final String arg0[] = args[0].split(":");
         final String server = arg0[0];
@@ -188,6 +209,10 @@ public class Pop3Receiver {
         } catch (final IOException e) {
             e.printStackTrace();
             return;
+        }finally {
+            for(String s : sendList){
+                System.out.println(s);
+            }
         }
     }
 }

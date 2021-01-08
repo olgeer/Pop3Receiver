@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e04a16bf-6fa7-454d-b21b-cba492a0e1c0" name="Default Changelist" comment="" />
+    <list default="true" id="e04a16bf-6fa7-454d-b21b-cba492a0e1c0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sword/Pop3Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sword/Pop3Receiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/sword/Pop3Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sword/Pop3Receiver.class" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
@@ -19,6 +26,7 @@
     <option name="skipTests" value="true" />
   </component>
   <component name="ProjectId" id="1jXrwoHeY8cjJ04utKSgagOPTn0" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
@@ -57,11 +65,41 @@
       <option name="presentableId" value="Default" />
       <updated>1603961518437</updated>
       <workItem from="1603961519663" duration="293000" />
-      <workItem from="1610088452602" duration="3224000" />
+      <workItem from="1610088452602" duration="3319000" />
+      <workItem from="1610093079925" duration="716000" />
+      <workItem from="1610093870796" duration="1743000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="github/main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
