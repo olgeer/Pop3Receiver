@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e04a16bf-6fa7-454d-b21b-cba492a0e1c0" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sword/Pop3Receiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sword/Pop3Receiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/sword/Pop3Receiver.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/sword/Pop3Receiver.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -67,8 +65,16 @@
       <workItem from="1603961519663" duration="293000" />
       <workItem from="1610088452602" duration="3319000" />
       <workItem from="1610093079925" duration="716000" />
-      <workItem from="1610093870796" duration="1743000" />
+      <workItem from="1610093870796" duration="2059000" />
     </task>
+    <task id="LOCAL-00001" summary="01/08&#10;added sendlist check;">
+      <created>1610095674653</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1610095674653</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -101,5 +107,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="01/08&#10;added sendlist check;" />
+    <option name="LAST_COMMIT_MESSAGE" value="01/08&#10;added sendlist check;" />
   </component>
 </project>
