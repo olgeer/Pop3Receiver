@@ -174,7 +174,7 @@ public class Pop3Receiver {
 
             System.out.println("Status: " + status);
 
-            pop3.setReceiveBufferSize(10);
+//            pop3.setReceiveBufferSize(10);
             final POP3MessageInfo[] messages = pop3.listMessages();
 
             if (messages == null) {
