@@ -18,7 +18,8 @@ import com.buck.common.codec.QuotedPrintable;
 
 public class Pop3Receiver {
     private static List<String> sendList;
-    public static void printMessageInfo(final BufferedReader reader, final int id) throws IOException {
+    public static boolean printMessageInfo(final BufferedReader reader, final int id) throws IOException {
+        boolean sendSuccess=false;
         StringBuilder mail = new StringBuilder();
         String from = "";
         String subject = "";
@@ -77,14 +78,14 @@ public class Pop3Receiver {
 //                            System.out.println(str);
 //                        }
 //                        bufr.close();
-
+                        sendSuccess=true;
                     } else {
                         System.err.println("失败");
                     }
                 }
             }
         }
-        mail = new StringBuilder();
+        return sendSuccess;
     }
 
     private static boolean needSend(String url){    //判断是否曾经发送过，返回结果并添加到已发送列表
@@ -204,7 +205,9 @@ public class Pop3Receiver {
                     pop3.disconnect();
                     return;
                 }
-                printMessageInfo(reader, msginfo.number);
+                if(printMessageInfo(reader, msginfo.number)){
+                    pop3.deleteMessage(msginfo.number);
+                }
             }
 
             pop3.logout();
