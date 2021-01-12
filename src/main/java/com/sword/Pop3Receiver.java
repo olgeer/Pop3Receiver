@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -19,16 +19,16 @@ import com.buck.common.codec.QuotedPrintable;
 public class Pop3Receiver {
     private static List<String> sendList;
     public static void printMessageInfo(final BufferedReader reader, final int id) throws IOException {
-        String mail = "";
+        StringBuilder mail = new StringBuilder();
         String from = "";
         String subject = "";
         String line;
-        String html = "";
+        StringBuilder html = new StringBuilder();
         boolean visitUrl = true;
         boolean htmlFind = false;
         while ((line = reader.readLine()) != null) {
             final String lower = line.toLowerCase(Locale.ENGLISH);
-            mail += line + "\n\r";
+            mail.append(line).append("\n\r");
             if (lower.startsWith("from: ")) {
                 from = line.substring(6).trim();
             } else if (lower.startsWith("subject: ")) {
@@ -39,7 +39,7 @@ public class Pop3Receiver {
 //                System.out.println(line);
 //                html+=new String(new QuotedPrintable().newDecoder().decode(line.getBytes("utf-8")), Charset.forName("utf-8"));
                 if (line.endsWith("=")) line = line.substring(0, line.length() - 1);
-                html += line;
+                html.append(line);
             }
             if (line.contains("</html>")) htmlFind = false;
         }
@@ -49,16 +49,16 @@ public class Pop3Receiver {
         if (from.contains("@amazon.com")) {
 //            System.out.print(mail);
 //        html="=E6=AC=A2=E8=BF=8E=E4=BD=BF=E7=94=A8=E7=BD=91"; //test code
-            html = new String(new QuotedPrintable().newDecoder().decode(html.getBytes("utf-8")), Charset.forName("utf-8"));
-            if (html.contains("验证请求") && visitUrl) {
-                html = html.substring(0, html.indexOf("验证请求"));
-                html = html.substring(html.lastIndexOf("<a "));
-                html = html.substring(html.indexOf("href=\"") + 6);
-                html = html.substring(0, html.indexOf("\""));
+            html = new StringBuilder(new String(new QuotedPrintable().newDecoder().decode(html.toString().getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8));
+            if (html.toString().contains("验证请求") && visitUrl) {
+                html = new StringBuilder(html.substring(0, html.indexOf("验证请求")));
+                html = new StringBuilder(html.substring(html.lastIndexOf("<a ")));
+                html = new StringBuilder(html.substring(html.indexOf("href=\"") + 6));
+                html = new StringBuilder(html.substring(0, html.indexOf("\"")));
 
                 System.out.println(html);
 
-                String confirmUrl = html;
+                String confirmUrl = html.toString();
 
                 if(needSend(confirmUrl)) {
                     URL url = new URL(confirmUrl);
@@ -84,13 +84,16 @@ public class Pop3Receiver {
                 }
             }
         }
-        mail = "";
+        mail = new StringBuilder();
     }
 
     private static boolean needSend(String url){    //判断是否曾经发送过，返回结果并添加到已发送列表
         boolean ret=true;
         for(String s : sendList){
-            if(s.compareTo(url)==0)ret=false;
+            if (s.compareTo(url) == 0) {
+                ret = false;
+                break;
+            }
         }
         if(ret){
             sendList.add(url);
@@ -111,7 +114,7 @@ public class Pop3Receiver {
         //todo:load sendlist
         sendList=new ArrayList<String>();
 
-        final String arg0[] = args[0].split(":");
+        final String[] arg0 = args[0].split(":");
         final String server = arg0[0];
         final String username = args[1];
         String password = args[2];
@@ -124,7 +127,7 @@ public class Pop3Receiver {
 //        }
 
         final String proto = args.length > 3 ? args[3] : null;
-        final boolean implicit = args.length > 4 ? Boolean.parseBoolean(args[4]) : false;
+        final boolean implicit = args.length > 4 && Boolean.parseBoolean(args[4]);
 
         POP3Client pop3;
 
@@ -208,7 +211,6 @@ public class Pop3Receiver {
             pop3.disconnect();
         } catch (final IOException e) {
             e.printStackTrace();
-            return;
         }finally {
             for(String s : sendList){
                 System.out.println(s);
