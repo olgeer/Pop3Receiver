@@ -150,8 +150,8 @@ public class Pop3Receiver {
         // We want to timeout if a response takes longer than 60 seconds
         pop3.setDefaultTimeout(60000);
 
-        // suppress login details
-        pop3.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
+        // suppress login details 监听运行状态，并输出到标准输出
+//        pop3.addProtocolCommandListener(new PrintCommandListener(new PrintWriter(System.out), true));
 
         try {
             pop3.connect(server);
@@ -214,10 +214,11 @@ public class Pop3Receiver {
             pop3.disconnect();
         } catch (final IOException e) {
             e.printStackTrace();
-        }finally {
-            for(String s : sendList){
-                System.out.println(s);
-            }
         }
+//        finally {
+//            for(String s : sendList){
+//                System.out.println(s);
+//            }
+//        }
     }
 }
